@@ -12,7 +12,7 @@ import java.util.List;
 @Service    // 标记为Spring的Service类
 public class DeptServiceImpl implements DeptService {
     @Autowired
-    private DeptMapper deptMapper;
+    private DeptMapper deptMapper;  // 注入Mapper接口, 用于调用Mapper接口中的方法, 访问数据库
 
     @Override
     public List<Dept> list() {

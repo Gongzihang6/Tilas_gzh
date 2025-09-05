@@ -1,19 +1,20 @@
-# application.yml   SpringBoot \u914D\u7F6E\u6587\u4EF6
+# application.yml   SpringBoot 项目配置文件
 
-# \u670D\u52A1\u5668\u7AEF\u53E3
+# 服务器端口
 server:
     port: 8080
 
-# \u6570\u636E\u5E93\u8FDE\u63A5\u914D\u7F6E
+# 数据库连接配置
 spring:
     datasource:
         url: jdbc:mysql://localhost:3306/tilas?useSSL=false&serverTimezone=UTC&characterEncoding=utf8
         username: root
         password: 1234
         driver-class-name: com.mysql.cj.jdbc.Driver
-# MyBatis\u914D\u7F6E
+# MyBatis配置
 mybatis:
     configuration:
-        map-underscore-to-camel-case: true  # \u5173\u952E\u914D\u7F6E
-        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # \u5F00\u542FSQL\u65E5\u5FD7
+        map-underscore-to-camel-case: true  # 自动将数据库字段名的下划线命名映射到java实体类的驼峰命名属性上
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 在控制台打印必要的SQL日志信息
     mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: com.gzh.tilas.pojo    # 实体类所在包，不然mybatis找不到员工实体类

@@ -9,4 +9,8 @@ import java.util.List;
 public interface DeptMapper {
     @Select("select * from dept")
     List<Dept> list();
+
+    // 增加员工
+
+
 }
