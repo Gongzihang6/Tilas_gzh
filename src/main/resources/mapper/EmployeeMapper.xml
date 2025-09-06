@@ -27,6 +27,10 @@
     <delete id="deleteById" parameterType="Integer">
         DELETE FROM emp WHERE id = #{id}
     </delete>
+    <!-- 根据员工姓名删除员工-->
+    <delete id="deleteByName" parameterType="String">
+        DELETE FROM emp WHERE name = #{name}
+    </delete>
 
     <!-- 更新员工信息 -->
     <update id="update" parameterType="Employee">
@@ -50,20 +54,46 @@
         SELECT * FROM emp WHERE id = #{id}
     </select>
     <!-- 根据员工名称查询员工-->
-    <select id="getByName" parameterType="Employee" resultMap="EmployeeResultMap">
+    <select id="getByName" parameterType="String" resultMap="EmployeeResultMap">
         SELECT * FROM emp WHERE name = #{name}
     </select>
 
 
 
-    <!-- 查询所有员工 -->
+    <!-- 查询所有员工，根据创建时间降序排序返回结果 -->
     <select id="list" resultMap="EmployeeResultMap">
         SELECT * FROM emp ORDER BY create_time DESC
     </select>
 
-    <!-- 根据部门ID查询员工 -->
+    <!-- 根据部门ID查询员工，根据创建时间降序排序返回结果 -->
     <select id="listByDeptId" parameterType="Integer" resultMap="EmployeeResultMap">
         SELECT * FROM emp WHERE dept_id = #{deptId} ORDER BY create_time DESC
+    </select>
+
+    <!-- 分页查询员工-->
+    <select id="listByPage" resultType="Employee">
+        SELECT
+        id, username, password, name, gender, avatar, dept_id, entry_date, job_id, salary, create_time, update_time
+        FROM emp
+        <where>
+            <!-- 条件1: 姓名模糊查询 -->
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <!-- 条件2: 性别精确查询 -->
+            <if test="gender != null">
+                AND gender = #{gender}
+            </if>
+            <!-- 条件3: 入职日期范围查询 - 开始时间 -->
+            <if test="begin != null and begin != ''">
+                AND entry_date >= #{begin}
+            </if>
+            <!-- 条件4: 入职日期范围查询 - 结束时间 -->
+            <if test="end != null and end != ''">
+                AND entry_date &lt;= #{end}
+            </if>
+        </where>
+        LIMIT #{offset}, #{pageSize}
     </select>
 
 </mapper>

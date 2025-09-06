@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gzh.tilas.Mapper.DeptMapper">
+
+    <!-- 结果映射 映射规则，映射 java 实体类 Employee 的属性和数据库表 emp的字段
+    这样即使不一致也能正常接收SQL查询结果封装为Employee类-->
+    <resultMap id="DeptResultMap" type="Dept">
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <!-- 添加部门 -->
+    <insert id="insert" parameterType="Dept" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO dept (
+            name, create_time, update_time
+        ) VALUES (
+                     #{name}, NOW(), NOW()
+                 )
+    </insert>
+
+    <!-- 根据id删除部门-->
+    <delete id="deleteById" parameterType="Integer">
+        DELETE FROM dept WHERE id = #{id}
+    </delete>
+
+    <!-- 修改部门信息-->
+    <update id="update" parameterType="Dept">
+        UPDATE dept
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据id查询部门-->
+    <select id="getById" parameterType="Integer" resultMap="DeptResultMap">
+        SELECT * FROM dept WHERE id = #{id}
+    </select>
+
+    <!-- 查询所有部门-->
+    <select id="list" resultMap="DeptResultMap">
+        SELECT * FROM dept ORDER BY create_time DESC
+    </select>
+
+    <!-- 分页查询部门信息-->
+    <select id="listByPage" resultMap="DeptResultMap">
+        SELECT
+        id, name, create_time, update_time
+        FROM dept
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+</mapper>
