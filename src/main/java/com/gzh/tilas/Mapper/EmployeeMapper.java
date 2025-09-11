@@ -30,6 +30,12 @@ public interface EmployeeMapper {
     public int deleteByName(String employee);
 
     /**
+     * 根据员工ID批量删除员工
+     * @param ids 员工id数组
+     * @return 影响的行数
+     */
+    public int deleteByIds(Integer[] ids);
+    /**
      * 更新员工信息
      * @return 影响的行数
      */
@@ -59,6 +65,8 @@ public interface EmployeeMapper {
      * 分页条件查询员工
      * @param name 姓名, 模糊查询
      * @param gender 性别
+     * @param deptId 部门ID
+     * @param jobId 职位ID
      * @param begin 开始时间
      * @param end 结束时间
      * @param offset 起始索引, 用于分页
@@ -68,6 +76,8 @@ public interface EmployeeMapper {
     List<Employee> listByPage(
             @Param("name") String name,
             @Param("gender") Integer gender,
+            @Param("deptId") Integer deptId,
+            @Param("jobId") Integer jobId,
             @Param("begin") String begin,
             @Param("end") String end,
             @Param("offset") Integer offset,
@@ -78,4 +88,16 @@ public interface EmployeeMapper {
      * @param deptId 部门id
      */
     public List<Employee> listByDeptId(Integer deptId);
+
+    /**
+     * 计算分页查询到的员工的总数
+     * @param name      员工姓名，模糊查询
+     * @param gender    员工性别，1-男，2-女
+     * @param deptId    员工部门ID
+     * @param jobId     员工职位ID
+     * @param begin     员工入职时间段开始
+     * @param end       员工入职时间段结束
+     * @return 员工总数
+     */
+    Long count(String name, Integer gender, Integer deptId, Integer jobId, String begin, String end);
 }

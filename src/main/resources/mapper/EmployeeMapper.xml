@@ -12,14 +12,15 @@
         <result property="jobId" column="job_id"/>
         <result property="deptId" column="dept_id"/>
         <result property="createTime" column="create_time"/>
+        <result property="phoneNumber" column="phone_number"/>
     </resultMap>
 
     <!-- 添加员工 -->
     <insert id="insert" parameterType="Employee" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO emp (
-            username, password, name, gender, avatar, dept_id, job_id, salary, entry_date, create_time, update_time
+            username, password, name, gender, avatar, dept_id, job_id, salary, entry_date, create_time, update_time, phone_number
         ) VALUES (
-                     #{username}, #{password}, #{name}, #{gender}, #{avatar}, #{deptId}, #{jobId}, #{salary}, #{entryDate}, NOW(), NOW()
+            #{username}, #{password}, #{name}, #{gender}, #{avatar}, #{deptId}, #{jobId}, #{salary}, #{entryDate}, NOW(), NOW(), #{phoneNumber}
                  )
     </insert>
 
@@ -31,7 +32,13 @@
     <delete id="deleteByName" parameterType="String">
         DELETE FROM emp WHERE name = #{name}
     </delete>
-
+    <!-- 根据IDs批量删除员工-->
+    <update id="deleteByIds" parameterType="Integer[]">
+        DELETE FROM emp WHERE id IN
+        <foreach item="id" collection="ids" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
     <!-- 更新员工信息 -->
     <update id="update" parameterType="Employee">
         UPDATE emp
@@ -45,6 +52,7 @@
             <if test="jobId != null">job_id = #{jobId},</if>
             <if test="salary != null">salary = #{salary},</if>
             <if test="entryDate != null">entry_date = #{entryDate},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
         </set>
         WHERE id = #{id}
     </update>
@@ -73,7 +81,7 @@
     <!-- 分页查询员工-->
     <select id="listByPage" resultType="Employee">
         SELECT
-        id, username, password, name, gender, avatar, dept_id, entry_date, job_id, salary, create_time, update_time
+        *
         FROM emp
         <where>
             <!-- 条件1: 姓名模糊查询 -->
@@ -83,6 +91,12 @@
             <!-- 条件2: 性别精确查询 -->
             <if test="gender != null">
                 AND gender = #{gender}
+            </if>
+            <if test="deptId != null">
+                AND dept_id = #{deptId}
+            </if>
+            <if test="jobId != null">
+                AND job_id = #{jobId}
             </if>
             <!-- 条件3: 入职日期范围查询 - 开始时间 -->
             <if test="begin != null and begin != ''">
@@ -94,6 +108,35 @@
             </if>
         </where>
         LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!-- 分页查询符合条件的员工总记录数-->
+    <select id="count" resultType="Long">
+        SELECT COUNT(*) FROM emp
+        <where>
+            <!-- 条件1: 姓名模糊查询 -->
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <!-- 条件2: 性别精确查询 -->
+            <if test="gender != null">
+                AND gender = #{gender}
+            </if>
+            <if test="deptId != null">
+                AND dept_id = #{deptId}
+            </if>
+            <if test="jobId != null">
+                AND job_id = #{jobId}
+            </if>
+            <!-- 条件3: 入职日期范围查询 - 开始时间 -->
+            <if test="begin != null and begin != ''">
+                AND entry_date >= #{begin}
+            </if>
+            <!-- 条件4: 入职日期范围查询 - 结束时间 -->
+            <if test="end != null and end != ''">
+                AND entry_date &lt;= #{end}
+            </if>
+        </where>
     </select>
 
 </mapper>

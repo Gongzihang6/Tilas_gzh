@@ -1,6 +1,8 @@
 package com.gzh.tilas.Service;
 
 import com.gzh.tilas.pojo.Employee;
+import com.gzh.tilas.pojo.EmployeeUpdateDTO;
+import com.gzh.tilas.pojo.PageBean;
 
 import java.util.List;
 import java.util.Map;
@@ -12,9 +14,9 @@ public interface EmployeeService {
     // 删除员工
     public int deleteById(Integer id);
     public int deleteByName(String  name);
-
+    public int deleteByIds(Integer [] ids);
     // 修改员工
-    public int update(Employee employee);
+    public int update(EmployeeUpdateDTO employeeUpdateDTO);
     void partialUpdate(Integer id, Map<String, Object> updates);
 
     // 查询员工
@@ -34,7 +36,7 @@ public interface EmployeeService {
      * @param end           入职日期的结束时间
      * @return  List<Employee>
      */
-    public List<Employee> listByPage(Integer page, Integer pageSize, String name, Integer gender, String begin, String end);
+    public PageBean listByPage(Integer page, Integer pageSize, String name, Integer gender, Integer deptId, Integer jobId, String begin, String end);
     // 根据部门id查询某个部门的所有员工
     public List<Employee> listByDeptId(Integer deptId);
 

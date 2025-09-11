@@ -52,4 +52,5 @@ public class Employee {
     private LocalDate entryDate;    // 入职时间 年月日
     private LocalDateTime createTime;   // 创建时间 年月日时分秒
     private LocalDateTime updateTime;   // 修改时间 年月日时分秒
+    private String phoneNumber;     // 手机号
 }

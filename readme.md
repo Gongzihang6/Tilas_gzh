@@ -101,9 +101,25 @@ public class DeptServiceImpl implements DeptService {
 -   node.js版本：v20.12.0
 -   npm版本：10.5.0
 
+```cmd
+(base) PS F:\learn_source\java\Tilas-Fronted> pnpm install element-plus axios vue-router@4 pinia
+Downloading element-plus@2.11.2: 7.55 MB/7.55 MB, done
+Packages: +60
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 154, reused 48, downloaded 60, added 60, done
+
+dependencies:
++ axios 1.11.0
++ element-plus 2.11.2
++ pinia 3.0.3
++ vue-router 4.5.1
+```
 
 
 
+## 2025-09-09
+
+优化分页查询返回结果，按照前端通用返回格式，新建一个PageBean，返回分页查询到的总记录数，以及当前page和pageSize下的员工列表
 
 
 
