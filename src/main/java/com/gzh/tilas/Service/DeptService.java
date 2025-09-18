@@ -1,6 +1,9 @@
 package com.gzh.tilas.Service;
 
 import com.gzh.tilas.pojo.Dept;
+import com.gzh.tilas.pojo.DeptAddDTO;
+import com.gzh.tilas.pojo.DeptUpdateDTO;
+import com.gzh.tilas.pojo.PageBean;
 
 import java.util.List;
 
@@ -14,16 +17,16 @@ public interface DeptService {
      * @param pageSize      每页的数据条数
      * @return List<Dept>
      */
-    List<Dept> listByPage(Integer page, Integer pageSize);
+    PageBean<Dept> listByPage(Integer page, Integer pageSize);
 
     // 根据id查询部门信息
     Dept getById(Integer id);
 
     // 插入部门信息
-    int insert(Dept dept);
+    int insert(DeptAddDTO deptAddDTO);
 
     // 更新部门信息
-    int update(Dept dept);
+    int update(DeptUpdateDTO deptUpdateDTO);
 
     // 删除部门信息
     int deleteById(Integer id);

@@ -1,8 +1,7 @@
 package com.gzh.tilas.Controller;
 
 import com.gzh.tilas.Service.DeptService;
-import com.gzh.tilas.pojo.Dept;
-import com.gzh.tilas.pojo.Result; // 引入你的Result类
+import com.gzh.tilas.pojo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +35,8 @@ public class DeptController {
     @GetMapping(params = {"page", "pageSize"})
     public Result listByPage(Integer page, Integer pageSize){
         log.info("分页查询部门数据: page={}, pageSize={}", page, pageSize);
-        List<Dept> deptList = deptService.listByPage(page, pageSize);
-        return Result.success(deptList);
+        PageBean<Dept> deptListByPage = deptService.listByPage(page, pageSize);
+        return Result.success(deptListByPage);
     }
 
     /**
@@ -61,9 +60,9 @@ public class DeptController {
      * POST /depts
      */
     @PostMapping
-    public Result insert(@RequestBody Dept dept) {
-        log.info("新增部门: {}", dept);
-        deptService.insert(dept); // 假设service层处理了异常
+    public Result insert(@RequestBody DeptAddDTO deptAddDTO) {
+        log.info("新增部门: {}", deptAddDTO);
+        deptService.insert(deptAddDTO); // 假设service层处理了异常
         return Result.success();
     }
 
@@ -88,9 +87,9 @@ public class DeptController {
      * PUT /depts
      */
     @PutMapping
-    public Result update(@RequestBody Dept dept) {
-        log.info("修改部门: {}", dept);
-        deptService.update(dept);
+    public Result update(@RequestBody DeptUpdateDTO deptUpdateDTO) {
+        log.info("修改部门信息");
+        deptService.update(deptUpdateDTO);
         return Result.success();
     }
 }

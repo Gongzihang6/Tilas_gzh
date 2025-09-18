@@ -78,15 +78,13 @@ public class EmployeeController {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeAddDTO, employee);     // 将DTO属性复制给实体
 
-
-
         employeeService.insert(employee);
         return Result.success();
     }
 
     /**
      * 根据ID删除员工信息
-     * DELETE /employees/1
+     * DELETE /emps/1
      */
     @DeleteMapping("/{id}")
     public Result deleteById(@PathVariable Integer id) {
@@ -101,7 +99,7 @@ public class EmployeeController {
 
     /**
      * 根据ID数组批量删除员工信息
-     * DELETE /employees/1
+     * DELETE /emps/1
      */
     @DeleteMapping()
     public Result deleteByIds(Integer[] ids) {
@@ -115,25 +113,13 @@ public class EmployeeController {
 
     /**
      * 更新员工全部信息 (Full Update)
-     * PUT /employees
+     * PUT /empls
      * 要求客户端提供完整的员工对象
      */
     @PutMapping
     public Result update(@RequestBody EmployeeUpdateDTO employeeUpdateDTO) {
         log.info("更新员工信息: {}", employeeUpdateDTO);
         employeeService.update(employeeUpdateDTO);
-        return Result.success();
-    }
-
-    /**
-     * 根据员工id更新该员工部分信息 (Partial Update)
-     * PATCH /employees/1
-     * 客户端可以只提供需要修改的字段
-     */
-    @PatchMapping("/{id}")
-    public Result partialUpdate(@PathVariable Integer id, @RequestBody Map<String, Object> updates) {
-        log.info("部分更新员工ID: {}, 更新内容: {}", id, updates);
-        employeeService.partialUpdate(id, updates); // 需要在Service层实现此方法
         return Result.success();
     }
 }

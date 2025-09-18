@@ -22,3 +22,6 @@ mybatis:
 Tilas:
     Employee:
         defaultPassword: "123456"
+    jwt:
+        secret-key: "gongzihang" # 必须修改为一个复杂且保密的字符串
+        expire-time: 3600000 # Token有效期，单位毫秒 (这里是1小时)

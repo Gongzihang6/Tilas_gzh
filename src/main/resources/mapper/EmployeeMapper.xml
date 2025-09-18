@@ -53,6 +53,7 @@
             <if test="salary != null">salary = #{salary},</if>
             <if test="entryDate != null">entry_date = #{entryDate},</if>
             <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            update_time = NOW()
         </set>
         WHERE id = #{id}
     </update>
@@ -137,6 +138,11 @@
                 AND entry_date &lt;= #{end}
             </if>
         </where>
+    </select>
+
+    <!-- 根据LoginDTO查询员工-->
+    <select id="getEmployeeByLoginDTO" parameterType="LoginDTO" resultMap="EmployeeResultMap">
+        SELECT * FROM emp WHERE username = #{username}
     </select>
 
 </mapper>

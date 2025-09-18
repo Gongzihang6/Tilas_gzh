@@ -40,15 +40,15 @@ import java.time.LocalDateTime;
 
 @Data
 public class Employee {
-    private Integer id;
-    private String username;
-    private String password;
-    private String name;
+    private Integer id;         // 员工ID，无符号整数，主键自增
+    private String username;    // 员工用户名，最长20个字符，非空且唯一
+    private String password;    // 员工密码，最长32个字符，非空
+    private String name;        // 员工姓名，最长10个字符，非空
     private Integer gender;     // 1:男  2:女
     private String avatar;     // 头像url
-    private Integer deptId;
-    private Integer jobId;
-    private Double salary;
+    private Integer deptId;     // 部门ID，关联部门表
+    private Integer jobId;      // 职位ID
+    private Double salary;        // 薪资
     private LocalDate entryDate;    // 入职时间 年月日
     private LocalDateTime createTime;   // 创建时间 年月日时分秒
     private LocalDateTime updateTime;   // 修改时间 年月日时分秒
