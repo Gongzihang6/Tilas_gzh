@@ -14,6 +14,14 @@
         <result property="createTime" column="create_time"/>
         <result property="phoneNumber" column="phone_number"/>
     </resultMap>
+    <resultMap id="AvgSalaryResultMap" type="com.gzh.tilas.pojo.AvgSalaryDTO">
+        <!--
+            column="averageSalary": 数据库返回的列名(或SQL别名)
+            property="averageSalary": Java DTO 中的字段名
+        -->
+        <result column="name" property="name"/>
+        <result column="averageSalary" property="avgSalary"/>
+    </resultMap>
 
     <!-- 添加员工 -->
     <insert id="insert" parameterType="Employee" useGeneratedKeys="true" keyProperty="id">
@@ -145,4 +153,40 @@
         SELECT * FROM emp WHERE username = #{username}
     </select>
 
+    <!-- 统计员工性别比例-->
+    <select id="countByGender" resultType="GenderCountDTO">
+        SELECT gender, COUNT(*) AS count FROM emp GROUP BY gender ORDER BY count asc
+    </select>
+
+    <select id="countAvgSalaryByDept" resultType="AvgSalaryDTO" resultMap="AvgSalaryResultMap">
+        SELECT
+            j.name as name,
+            AVG(e.salary) as averageSalary
+        FROM
+            emp e
+                LEFT JOIN
+            job j ON e.job_id = j.id
+#         WHERE
+#             e.is_deleted = 0
+        GROUP BY
+            j.name
+        ORDER BY
+            averageSalary asc
+    </select>
+
+    <select id="countAvgSalaryByJob" resultType="AvgSalaryDTO" resultMap="AvgSalaryResultMap">
+        SELECT
+            d.name as name,
+            AVG(e.salary) as averageSalary
+        FROM
+            emp e
+                LEFT JOIN
+            dept d ON e.dept_id = d.id
+#         WHERE
+#             e.is_deleted = 0
+        GROUP BY
+            d.name
+        ORDER BY
+            averageSalary DESC
+    </select>
 </mapper>

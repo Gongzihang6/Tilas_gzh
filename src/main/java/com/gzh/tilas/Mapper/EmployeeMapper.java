@@ -1,6 +1,8 @@
 package com.gzh.tilas.Mapper;
 
+import com.gzh.tilas.pojo.AvgSalaryDTO;
 import com.gzh.tilas.pojo.Employee;
+import com.gzh.tilas.pojo.GenderCountDTO;
 import com.gzh.tilas.pojo.LoginDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -102,5 +104,28 @@ public interface EmployeeMapper {
      */
     Long count(String name, Integer gender, Integer deptId, Integer jobId, String begin, String end);
 
+    /**
+     * 根据登录信息查询员工
+     * @param loginDTO 登录信息
+     * @return 员工对象
+     */
     Employee getEmployeeByLoginDTO(LoginDTO loginDTO);
+
+    /**
+     * 根据性别统计员工数量
+     * @return 员工性别统计对象列表，每个对象包含性别和员工数量
+     */
+    List<GenderCountDTO> countByGender();
+
+    /**
+     * 根据部门ID统计部门员工平均工资
+     * @return 部门员工平均工资对象列表，每个对象包含部门ID和平均工资
+     */
+    List<AvgSalaryDTO> countAvgSalaryByDept();
+
+    /**
+     * 根据职位ID统计职位员工平均工资
+     * @return 部门员工平均工资对象列表，每个对象包含职位ID和平均工资
+     */
+    List<AvgSalaryDTO> countAvgSalaryByJob();
 }
