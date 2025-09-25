@@ -3,6 +3,7 @@ package com.gzh.tilas.Service.impl;
 import com.gzh.tilas.Mapper.EmployeeMapper;
 import com.gzh.tilas.pojo.Employee;
 import com.gzh.tilas.pojo.LoginDTO;
+import com.gzh.tilas.pojo.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,7 +34,7 @@ public class LoginServiceImpl implements UserDetailsService {
         //    - 第一个参数：用户名
         //    - 第二个参数：数据库中存储的、已经加密过的密码
         //    - 第三个参数：权限列表（这里暂时为空）
-        return new User(employee.getUsername(), employee.getPassword(), new ArrayList<>());
+        return new LoginUser(employee);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.gzh.tilas.Controller;
 
 import com.gzh.tilas.Service.DeptService;
+import com.gzh.tilas.annotation.OperationLog;
 import com.gzh.tilas.pojo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
@@ -43,6 +44,7 @@ public class DeptController {
      * 根据ID删除部门信息
      * DELETE /depts/1
      */
+    @OperationLog("删除部门")
     @DeleteMapping("/{id}")
     public Result deleteById(@PathVariable Integer id) {
         log.info("根据id删除部门: {}", id);
@@ -59,6 +61,7 @@ public class DeptController {
      * 添加部门信息
      * POST /depts
      */
+    @OperationLog("新增部门")
     @PostMapping
     public Result insert(@RequestBody DeptAddDTO deptAddDTO) {
         log.info("新增部门: {}", deptAddDTO);
@@ -86,6 +89,7 @@ public class DeptController {
      * Body中要给定要修改的部门信息，最重要要有部门id，根据这个部门id来识别要修改的部门
      * PUT /depts
      */
+    @OperationLog("修改部门")
     @PutMapping
     public Result update(@RequestBody DeptUpdateDTO deptUpdateDTO) {
         log.info("修改部门信息");

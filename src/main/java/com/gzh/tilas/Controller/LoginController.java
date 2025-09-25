@@ -3,6 +3,7 @@ package com.gzh.tilas.Controller;
 
 
 import com.gzh.tilas.pojo.LoginDTO;
+import com.gzh.tilas.pojo.LoginUser;
 import com.gzh.tilas.pojo.Result;
 import com.gzh.tilas.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,10 @@ public class LoginController {
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
             // 2. 如果认证通过，authentication 对象中会包含用户信息
-            User userDetails = (User) authentication.getPrincipal();
+            LoginUser userDetails = (LoginUser) authentication.getPrincipal();
             Map<String, Object> claims = new HashMap<>();
-            claims.put("username", userDetails.getUsername());
+            claims.put("id", userDetails.getUser().getId());
+            claims.put("username", userDetails.getUser().getUsername());
 
             String jwt = jwtUtil.generateToken(claims);
             return Result.success(jwt);
